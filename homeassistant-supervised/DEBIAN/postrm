@@ -25,11 +25,17 @@ function reset_debconf_selections () {
   echo PURGE | debconf-communicate homeassistant-supervised >/dev/null
 }
 
+function reload_services () {
+  info "Reloading services"
+  systemctl daemon-reload
+}
+
 case "$1" in
 remove|abort-install|disappear)
 	  info Undo divert on "$@"
           undo_divert
           reset_debconf_selections
+          reload_services
           info "Removal complete, due to the complexity of this installation method,"
           info "you will need to manually the containers created by the supervisor"
         ;;
