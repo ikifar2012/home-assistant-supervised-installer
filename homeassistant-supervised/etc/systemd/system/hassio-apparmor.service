@@ -1,6 +1,7 @@
 [Unit]
 Description=Hass.io AppArmor
-Wants=hassio-supervisor.service
+Wants=network-online.target time-sync.target
+After=network-online.target time-sync.target
 Before=%%SERVICE_DOCKER%% hassio-supervisor.service
 
 [Service]
