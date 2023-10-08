@@ -67,7 +67,7 @@ fi
 if [[ "$(docker ps -aq -f name=hassio_supervisor)" ]]; then
     # ensure the hassio_supervisor service is stopped
     info "Removing existing hassio_supervisor container"
-    docker container rm --force hassio_supervisor
+    docker container rm --force hassio_supervisor > /dev/null
 fi
 
 
