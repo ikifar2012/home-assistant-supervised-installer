@@ -70,7 +70,6 @@ if [[ "$(docker ps -aq -f name=hassio_supervisor)" ]]; then
     docker container rm --force hassio_supervisor > /dev/null
 fi
 
-
 dpkg-divert --package homeassistant-supervised --add --rename \
     --divert /etc/NetworkManager/NetworkManager.conf.real /etc/NetworkManager/NetworkManager.conf
 
