@@ -56,11 +56,6 @@ while ! ping -c 1 -W 1 ${URL_CHECK_ONLINE}; do
     sleep 2
 done
 
-# if haos-agent is installed, enable and start it
-if [ "$(systemctl is-active haos-agent.service)" = 'inactive' ]; then
-    info "Starting haos-agent service"
-    systemctl start haos-agent.service
-fi
 
 # Get primary network interface
 PRIMARY_INTERFACE=$(ip route | awk '/^default/ { print $5; exit }')
