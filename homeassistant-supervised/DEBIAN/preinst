@@ -54,7 +54,7 @@ fi
 # Check for existing hassio_supervisor container and destroy it
 if [[ "$(docker ps -aq -f name=hassio_supervisor)" ]]; then
     info "Removing existing hassio_supervisor container"
-    docker container rm --force hassio_supervisor || true
+    docker container rm --force hassio_supervisor
 fi
 
 
