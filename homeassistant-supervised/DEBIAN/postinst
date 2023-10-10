@@ -19,6 +19,9 @@ URL_VERSION="https://version.home-assistant.io/stable.json"
 HASSIO_VERSION=$(curl -s ${URL_VERSION} | jq -e -r '.supervisor')
 URL_APPARMOR_PROFILE="https://version.home-assistant.io/apparmor.txt"
 
+# reload systemd
+info "Reload systemd"
+systemctl daemon-reload
 
 # Restart NetworkManager
 info "Restarting NetworkManager"
@@ -46,9 +49,6 @@ if [ "$(systemctl is-active systemd-journal-gatewayd.socket)" = 'inactive' ]; th
     systemctl start systemd-journal-gatewayd.socket
 fi
 
-# Restart Docker service
-info "Restarting docker service"
-systemctl restart "${SERVICE_DOCKER}"
 
 # Check network connection
 while ! ping -c 1 -W 1 ${URL_CHECK_ONLINE}; do
@@ -141,6 +141,10 @@ sed -i -e "s,%%SERVICE_DOCKER%%,${SERVICE_DOCKER},g" \
 chmod a+x "${PREFIX}/sbin/hassio-apparmor"
 systemctl enable hassio-apparmor.service > /dev/null 2>&1;
 systemctl start hassio-apparmor.service
+
+# Start Docker
+info "Starting Docker service"
+systemctl start "${SERVICE_DOCKER}"
 
 # Start Supervisor
 info "Start Home Assistant Supervised"
